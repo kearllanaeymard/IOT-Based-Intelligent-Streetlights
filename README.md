@@ -1,2 +1,40 @@
 # IOT-Based-Intelligent-Streetlights
-IOT Based Street lights, Powered by Arduino, ESP8266, HTML5, Bootstrap, PHP, MYSQL
+IOT Intelligent Street lights are composed of special features which enables the automation of the streetlights. These IoT Intelligent lights can ensure low power consumption than the traditional streetlights. Lastly, these street lights consist of database and user interface which can lessen manpower and enables remote monitoring.
+*Powered by Arduino, ESP8266, HTML5, Bootstrap, PHP, MYSQL*
+
+## Pin Configurations
+
+* **LDR** = Analog 0
+
+* **ESP-8266**
+	* tx = digital 11
+	* rx = digital 3
+
+* **Ultrasonic A**
+	* trig = digital 30
+	* echo = digital 31
+
+* **Ultrasonic B**
+	* trig = digital 32
+	* echo = digital 33
+
+* **Ultrasonic C**
+	* trig = digital 34
+	* echo = digital 35
+
+* **LED A (3pcs Parallel Connection)** = digital 5
+
+* **LED B (3pcs Parallel Connection)** = digital 6
+
+* **LED C (3pcs Parallel Connection)** = digital 7
+
+* **LED Indicator** = digital 52
+
+## Wiring Diagram
+![Wiring Diagram](wiring_diagram.jpg)
+![Sample](sample.jpg)
+
+## Web Page
+![Landing Page](Web_Page.png)
+![Streetlights Table](Web_Page2.png)
+![Stations Table](Web_Page3.png)
