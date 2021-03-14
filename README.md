@@ -11,16 +11,16 @@ IOT Intelligent Street lights are composed of special features which enables the
 	* rx = digital 3
 
 * **Ultrasonic A**
-	* trig = digital 30
-	* echo = digital 31
+	* trig = digital 14
+	* echo = digital 15
 
 * **Ultrasonic B**
-	* trig = digital 32
-	* echo = digital 33
+	* trig = digital 16
+	* echo = digital 17
 
 * **Ultrasonic C**
-	* trig = digital 34
-	* echo = digital 35
+	* trig = digital 18
+	* echo = digital 19
 
 * **LED A (3pcs Parallel Connection)** = digital 5
 
