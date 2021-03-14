@@ -6,17 +6,20 @@ int light1 = 5;
 int light2 = 6;
 int light3 = 7;
 
+int dim = 40;
+int fullBright = 255;
+
 char inputData;
 boolean newData = false;
 int x = 0;
 int y,z,r,s;
 
-const  int trigger1 = 30; 
-const  int echo1 = 31;
-const  int trigger2 = 32; 
-const  int echo2 = 33;
-const  int trigger3 = 34; 
-const  int echo3 = 35;
+const  int trigger1 = 14; 
+const  int echo1 = 15;
+const  int trigger2 = 16; 
+const  int echo2 = 17;
+const  int trigger3 = 18; 
+const  int echo3 = 19;
 float  distance1, distance2, distance3;
 
 unsigned long previousTime1 = 0;
@@ -68,14 +71,14 @@ void ping3(){
 
 void ping1Detected(){
     Serial.println("Ping1 Detected!");
-    analogWrite(light1, 255);
+    analogWrite(light1, fullBright);
     Serial.print("Ping1: ");
     Serial.println(distance1);
     mySerial.write('A');
     mySerial.write("o");
     while(z == 0){
         ping1();
-        if(distance1 > 0.70){
+        if(distance1 > 0.40){
           previousTime1 = millis();
           Serial.print("Prev Time1: ");
           Serial.println(millis());
@@ -85,10 +88,10 @@ void ping1Detected(){
           z++;
         }
         if((millis() - previousTime2) > ledInterval){
-              analogWrite(light2, 4);
+              analogWrite(light2, dim);
         }
         if((millis() - previousTime3) > ledInterval){
-              analogWrite(light3, 4);
+              analogWrite(light3, dim);
         }
       }
     
@@ -96,14 +99,14 @@ void ping1Detected(){
 
 void ping2Detected(){
     Serial.println("Ping2 Detected!");
-    analogWrite(light2, 255);
+    analogWrite(light2, fullBright);
     Serial.print("Ping2: ");
     Serial.println(distance2);
     mySerial.write('B');
     mySerial.write("o");
     while(r == 0){
         ping2();
-        if(distance2 > 0.70){
+        if(distance2 > 0.40){
           previousTime2 = millis();
           Serial.print("Prev Time2: ");
           Serial.println(millis());
@@ -113,24 +116,24 @@ void ping2Detected(){
           r++;
         }
         if((millis() - previousTime1) > ledInterval){
-              analogWrite(light1, 4);
+              analogWrite(light1, dim);
         }
         if((millis() - previousTime3) > ledInterval){
-              analogWrite(light3, 4);
+              analogWrite(light3, dim);
         }
       }  
   }
 
 void ping3Detected(){
     Serial.println("Ping3 Detected!");
-    analogWrite(light3, 255);
+    analogWrite(light3, fullBright);
     Serial.print("Ping3: ");
     Serial.println(distance3);
     mySerial.write('C');
     mySerial.write("o");
     while(s == 0){
         ping3();
-        if(distance3 > 0.70){
+        if(distance3 > 0.40){
           previousTime3 = millis();
           Serial.print("Prev Time3: ");
           Serial.println(millis());
@@ -140,10 +143,10 @@ void ping3Detected(){
           s++;
         }
         if((millis() - previousTime1) > ledInterval){
-              analogWrite(light1, 4);
+              analogWrite(light1, dim);
         }
         if((millis() - previousTime2) > ledInterval){
-              analogWrite(light2, 4);
+              analogWrite(light2, dim);
         }
       }
   }
@@ -188,7 +191,6 @@ void setup() {
       x++;
     }
   }
-  delay(100);
   digitalWrite(52, LOW);
   delay(100);
   digitalWrite(52, HIGH);
@@ -201,43 +203,43 @@ void loop() {
   // put your main code here, to run repeatedly:
     ldr = analogRead(A0);
     y = 0;
-    if(ldr < 500){
+    if(ldr < 100){
         Serial.println("Goodevening!");
         streetlightsActivated();
-        analogWrite(light1, 4);
-        analogWrite(light2, 4);
-        analogWrite(light3, 4);
+        analogWrite(light1, dim);
+        analogWrite(light2, dim);
+        analogWrite(light3, dim);
         while(y == 0){
           ldr = analogRead(A0);
           
-          if(ldr > 500){
+          if(ldr > 450){
               Serial.println("Goodmorning!");
               streetlightsDeactivated();
               y++;
             }
           ping1();
-          if((distance1 < 0.10) && (distance1 >= 0.03)){
+          if((distance1 <= 0.20) && (distance1 >= 0.10)){
               z = 0;
               ping1Detected();
             }
           ping2();
-          if((distance2 < 0.10) && (distance2 >= 0.03)){
+          if((distance2 <= 0.20) && (distance2 >= 0.10)){
               r = 0;
               ping2Detected();
             }
           ping3();
-          if((distance3 < 0.10) && (distance3 >= 0.03)){
+          if((distance3 <= 0.20) && (distance3 >= 0.10)){
               s = 0;
               ping3Detected();
             }
           if((millis() - previousTime1) > ledInterval){
-              analogWrite(light1, 4);
+              analogWrite(light1, dim);
             }
           if((millis() - previousTime2) > ledInterval){
-              analogWrite(light2, 4);
+              analogWrite(light2, dim);
             }
           if((millis() - previousTime3) > ledInterval){
-              analogWrite(light3, 4);
+              analogWrite(light3, dim);
             }
         }
        }

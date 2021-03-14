@@ -3,10 +3,9 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPClient.h>
 
-const char *ssid = "HomeBro_ULTERA";
-const char *password = "HomeBro_C5890E";
+const char *ssid = "MERCUSYS_26B4";
+const char *password = "Ella021872";
 const char *host = "http://000webhostapp.com";
-//const char *host = "192.168.22.8";
 
 char inputData;
 boolean newData = false;
@@ -30,7 +29,6 @@ void insertStationData(String station){
     String getData, Link;
     getData = "?station=" + station;
     Link = "http://pupiotdevelopment.000webhostapp.com/getstation.php" + getData;
-//    Link = "http://192.168.22.8/iot/getstation.php" + getData;
     http.begin(Link);
     int httpCode = http.GET();
     String payload = http.getString();
@@ -44,7 +42,6 @@ void insertActivationData(String lightStatus){
     String getData, Link;
     getData = "?streetlights=" + lightStatus;
     Link = "http://pupiotdevelopment.000webhostapp.com/getactivation.php" + getData;
-//    Link = "http://192.168.22.8/iot/getactivation.php" + getData;
     http.begin(Link);
     int httpCode = http.GET();
     String payload = http.getString();
