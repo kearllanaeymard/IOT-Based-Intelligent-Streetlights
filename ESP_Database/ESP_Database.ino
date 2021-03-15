@@ -3,8 +3,8 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPClient.h>
 
-const char *ssid = "MERCUSYS_26B4";
-const char *password = "Ella021872";
+const char *ssid = "ELLAMARIANO";
+const char *password = "ella021872";
 const char *host = "http://000webhostapp.com";
 
 char inputData;
