@@ -3,28 +3,28 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266HTTPClient.h>
 
-const char *ssid = "ELLAMARIANO";
-const char *password = "ella021872";
-const char *host = "http://000webhostapp.com";
+const char *ssid = "ELLAMARIANO"; //Wifi Name
+const char *password = "ella021872"; //Wifi Password
+const char *host = "http://000webhostapp.com"; //Hosting Company for the Web App
 
 char inputData;
 boolean newData = false;
 
-void receiveInput(){
+void receiveInput(){ //Receiving data from the Arduino to the ESP8266
     if(Serial.available()){
         inputData = Serial.read();
         newData = true;
       }
   }
 
-void showInput(){
+void showInput(){ //Showing the received data from the Arduino
     if(newData == true){
         Serial.println(inputData);
         newData = false;
       }
   }
 
-void insertStationData(String station){
+void insertStationData(String station){ //Code for Sending POST Request to the Web App
     HTTPClient http;
     String getData, Link;
     getData = "?station=" + station;
@@ -37,7 +37,7 @@ void insertStationData(String station){
     http.end();
   }
 
-void insertActivationData(String lightStatus){
+void insertActivationData(String lightStatus){ //Code for Sending POST Request to the Web App
     HTTPClient http;
     String getData, Link;
     getData = "?streetlights=" + lightStatus;

@@ -1,6 +1,7 @@
 #include<SoftwareSerial.h>
-SoftwareSerial mySerial(11, 3);
+SoftwareSerial mySerial(11, 3); //Pin Connection for the ESP8266
 
+// PINS for the Sensors and LEDs
 int ldr = analogRead(A0);
 int light1 = 5;
 int light2 = 6;
@@ -27,21 +28,21 @@ unsigned long previousTime2 = 0;
 unsigned long previousTime3 = 0;
 unsigned long ledInterval = 5000;
 
-void receiveInput(){
+void receiveInput(){ //Code for receiving data from the ESP8266 to the Arduino
     if(mySerial.available()){
         inputData = mySerial.read();
         newData = true;
       }
   }
 
-void showInput(){
+void showInput(){ //Code for showing the received data from the ESP8266 to the Serial Monitor
     if(newData == true){
         Serial.println(inputData);
         newData = false;
       }
   }
 
-void ping1(){
+void ping1(){ //Code for the Ultrasonic 1
     digitalWrite(trigger1,LOW);
     delayMicroseconds(5);
     digitalWrite(trigger1,HIGH);
@@ -50,7 +51,7 @@ void ping1(){
     distance1 = pulseIn(echo1,HIGH);
     distance1 = distance1*0.0001657;
   }
-void ping2(){
+void ping2(){ //Code for the Ultrasonic 2
     digitalWrite(trigger2,LOW);
     delayMicroseconds(5);
     digitalWrite(trigger2,HIGH);
@@ -59,7 +60,7 @@ void ping2(){
     distance2 = pulseIn(echo2,HIGH);
     distance2 = distance2*0.0001657;
   }
-void ping3(){
+void ping3(){ //Code for the Ultrasonic 3
     digitalWrite(trigger3,LOW);
     delayMicroseconds(5);
     digitalWrite(trigger3,HIGH);
@@ -69,7 +70,7 @@ void ping3(){
     distance3 = distance3*0.0001657;
   }
 
-void ping1Detected(){
+void ping1Detected(){ //Code when the Ultrasonic 1 detects an Object
     Serial.println("Ping1 Detected!");
     analogWrite(light1, fullBright);
     Serial.print("Ping1: ");
@@ -97,7 +98,7 @@ void ping1Detected(){
     
   }
 
-void ping2Detected(){
+void ping2Detected(){ //Code when the Ultrasonic 2 detects an Object
     Serial.println("Ping2 Detected!");
     analogWrite(light2, fullBright);
     Serial.print("Ping2: ");
@@ -124,7 +125,7 @@ void ping2Detected(){
       }  
   }
 
-void ping3Detected(){
+void ping3Detected(){ //Code when the Ultrasonic 3 detects an Object
     Serial.println("Ping3 Detected!");
     analogWrite(light3, fullBright);
     Serial.print("Ping3: ");
@@ -203,7 +204,7 @@ void loop() {
   // put your main code here, to run repeatedly:
     ldr = analogRead(A0);
     y = 0;
-    if(ldr < 100){
+    if(ldr < 100){ //If the LDR detects Night time
         Serial.println("Goodevening!");
         streetlightsActivated();
         analogWrite(light1, dim);
@@ -212,7 +213,7 @@ void loop() {
         while(y == 0){
           ldr = analogRead(A0);
           
-          if(ldr > 450){
+          if(ldr > 450){ //if LDR detects Day time
               Serial.println("Goodmorning!");
               streetlightsDeactivated();
               y++;
