@@ -78,8 +78,12 @@ void ping1Detected(){ //Code when the Ultrasonic 1 detects an Object
     mySerial.write('A');
     mySerial.write("o");
     while(z == 0){
+        ldr = analogRead(A0);
+        if(ldr > 450){ //if LDR detects Day time
+              z++;
+            }
         ping1();
-        if(distance1 > 0.40){
+        if(distance1 > 0.30){
           previousTime1 = millis();
           Serial.print("Prev Time1: ");
           Serial.println(millis());
@@ -106,8 +110,12 @@ void ping2Detected(){ //Code when the Ultrasonic 2 detects an Object
     mySerial.write('B');
     mySerial.write("o");
     while(r == 0){
+        ldr = analogRead(A0);
+          if(ldr > 450){ //if LDR detects Day time
+                r++;
+              }
         ping2();
-        if(distance2 > 0.40){
+        if(distance2 > 0.30){
           previousTime2 = millis();
           Serial.print("Prev Time2: ");
           Serial.println(millis());
@@ -133,6 +141,10 @@ void ping3Detected(){ //Code when the Ultrasonic 3 detects an Object
     mySerial.write('C');
     mySerial.write("o");
     while(s == 0){
+        ldr = analogRead(A0);
+          if(ldr > 450){ //if LDR detects Day time
+                s++;
+              }
         ping3();
         if(distance3 > 0.40){
           previousTime3 = millis();
@@ -219,17 +231,17 @@ void loop() {
               y++;
             }
           ping1();
-          if((distance1 <= 0.20) && (distance1 >= 0.10)){
+          if((distance1 <= 0.09) && (distance1 >= 0.05)){
               z = 0;
               ping1Detected();
             }
           ping2();
-          if((distance2 <= 0.20) && (distance2 >= 0.10)){
+          if((distance2 <= 0.09) && (distance2 >= 0.05)){
               r = 0;
               ping2Detected();
             }
           ping3();
-          if((distance3 <= 0.20) && (distance3 >= 0.10)){
+          if((distance3 <= 0.09) && (distance3 >= 0.05)){
               s = 0;
               ping3Detected();
             }
