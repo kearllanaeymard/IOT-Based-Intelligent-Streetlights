@@ -12,8 +12,9 @@ int fullBright = 255;
 
 char inputData;
 boolean newData = false;
-int x = 0;
-int y,z,r,s;
+
+int q,r,s;
+int y = 0;
 
 const  int trigger1 = 14; 
 const  int echo1 = 15;
@@ -50,6 +51,7 @@ void ping1(){ //Code for the Ultrasonic 1
     digitalWrite(trigger1,LOW);
     distance1 = pulseIn(echo1,HIGH);
     distance1 = distance1*0.0001657;
+    delay(100);
   }
 void ping2(){ //Code for the Ultrasonic 2
     digitalWrite(trigger2,LOW);
@@ -59,6 +61,7 @@ void ping2(){ //Code for the Ultrasonic 2
     digitalWrite(trigger2,LOW);
     distance2 = pulseIn(echo2,HIGH);
     distance2 = distance2*0.0001657;
+    delay(100);
   }
 void ping3(){ //Code for the Ultrasonic 3
     digitalWrite(trigger3,LOW);
@@ -68,6 +71,7 @@ void ping3(){ //Code for the Ultrasonic 3
     digitalWrite(trigger3,LOW);
     distance3 = pulseIn(echo3,HIGH);
     distance3 = distance3*0.0001657;
+    delay(100);
   }
 
 void ping1Detected(){ //Code when the Ultrasonic 1 detects an Object
@@ -77,10 +81,13 @@ void ping1Detected(){ //Code when the Ultrasonic 1 detects an Object
     Serial.println(distance1);
     mySerial.write('A');
     mySerial.write("o");
-    while(z == 0){
+    while(q == 0){
         ldr = analogRead(A0);
         if(ldr > 450){ //if LDR detects Day time
-              z++;
+              distance1 = 1.10;
+              Serial.print("distance1 Morning: ");
+              Serial.println(distance1);
+              q++;
             }
         ping1();
         if(distance1 > 0.30){
@@ -90,7 +97,7 @@ void ping1Detected(){ //Code when the Ultrasonic 1 detects an Object
           Serial.print("distance1: ");
           Serial.println(distance1);
           Serial.println("Data Recorded Successfully Light A");
-          z++;
+          q++;
         }
         if((millis() - previousTime2) > ledInterval){
               analogWrite(light2, dim);
@@ -99,7 +106,6 @@ void ping1Detected(){ //Code when the Ultrasonic 1 detects an Object
               analogWrite(light3, dim);
         }
       }
-    
   }
 
 void ping2Detected(){ //Code when the Ultrasonic 2 detects an Object
@@ -111,11 +117,14 @@ void ping2Detected(){ //Code when the Ultrasonic 2 detects an Object
     mySerial.write("o");
     while(r == 0){
         ldr = analogRead(A0);
-          if(ldr > 450){ //if LDR detects Day time
-                r++;
-              }
+        if(ldr > 450){ //if LDR detects Day time
+              distance2 = 1.10;
+              Serial.print("distance2 Morning: ");
+              Serial.println(distance2);
+              r++;
+            }
         ping2();
-        if(distance2 > 0.30){
+        if(distance2 > 0.18){
           previousTime2 = millis();
           Serial.print("Prev Time2: ");
           Serial.println(millis());
@@ -142,11 +151,14 @@ void ping3Detected(){ //Code when the Ultrasonic 3 detects an Object
     mySerial.write("o");
     while(s == 0){
         ldr = analogRead(A0);
-          if(ldr > 450){ //if LDR detects Day time
-                s++;
-              }
+        if(ldr > 450){ //if LDR detects Day time
+              distance3 = 1.10;
+              Serial.print("distance3 Morning: ");
+              Serial.println(distance3);
+              s++;
+            }
         ping3();
-        if(distance3 > 0.40){
+        if(distance3 > 0.18){
           previousTime3 = millis();
           Serial.print("Prev Time3: ");
           Serial.println(millis());
@@ -172,6 +184,7 @@ void streetlightsActivated(){
 void streetlightsDeactivated(){
     mySerial.write('F');
     mySerial.write("o");    
+    Serial.println("StreetLights DEACTIVATED!");
   }
 
 void setup() {
@@ -194,14 +207,14 @@ void setup() {
   Serial.begin(9600);
   mySerial.begin(9600);
   Serial.println("Arduino is Ready!");
-  while(x == 0){
+  while(y == 0){
     receiveInput();
     showInput();
     if(inputData == 'X'){
       digitalWrite(52, HIGH);
       Serial.println("Hello from ESP");
       inputData = 'o';
-      x++;
+      y++;
     }
   }
   digitalWrite(52, LOW);
@@ -215,24 +228,23 @@ void setup() {
 void loop() {
   // put your main code here, to run repeatedly:
     ldr = analogRead(A0);
-    y = 0;
     if(ldr < 100){ //If the LDR detects Night time
         Serial.println("Goodevening!");
         streetlightsActivated();
         analogWrite(light1, dim);
         analogWrite(light2, dim);
         analogWrite(light3, dim);
-        while(y == 0){
+        while(true){
           ldr = analogRead(A0);
           
           if(ldr > 450){ //if LDR detects Day time
-              Serial.println("Goodmorning!");
+              Serial.println("Goodmorning !!");
               streetlightsDeactivated();
-              y++;
+              break;
             }
           ping1();
-          if((distance1 <= 0.09) && (distance1 >= 0.05)){
-              z = 0;
+          if((distance1 <= 0.11) && (distance1 >= 0.08)){
+              q = 0;
               ping1Detected();
             }
           ping2();
