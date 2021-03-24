@@ -33,6 +33,9 @@ IOT Intelligent Street lights are composed of special features which enables the
 ## Wiring Diagram
 ![Wiring Diagram](wiring_diagram.jpg)
 ![Prototype](Prototype.PNG)
+<video width="320" height="325" controls muted>
+  <source src="SampleVideo.mp4" type="video/mp4">
+</video>
 
 ## Web Page
 
